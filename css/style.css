@@ -638,6 +638,26 @@ article footer .addthis iframe {
   margin-right: 10px;
   display: inline-block;
 }
+#sidebar .contact {
+  background: #fff;
+  -webkit-box-shadow: 1px 2px 3px #ddd;
+  box-shadow: 1px 2px 3px #ddd;
+  margin-bottom: 30px;
+  padding: 10px 10px;
+  word-wrap: break-word;
+}
+#sidebar .contact dl {
+  padding-left: 0px;
+}
+#sidebar .contact dl dt {
+  width: 20%;
+  clear: left;
+  float: left;
+  margin-left: 10px;
+}
+#sidebar .contact dl dd {
+  width: 22em;
+}
 #footer {
   color: #999;
   margin-bottom: 50px;
