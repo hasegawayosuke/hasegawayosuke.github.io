@@ -171,6 +171,9 @@ article .post-content {
     padding-left: 20px;
   }
 }
+article .adds {
+  margin-top: 1em;
+}
 article .gallery {
   overflow: hidden;
   position: relative;
