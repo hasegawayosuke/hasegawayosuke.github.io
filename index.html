@@ -74,7 +74,7 @@
         <p>Windows 7以降であれば netsh コマンドを使ってポートフォワーディングが簡単に設定できる。これを使えば、NAT接続なVMゲストに対して外部のマシンから接続するといったことも簡単に行える。もちろん、VirtualBoxだと素直にポートフォワーディングルールの設定、VMware Playerだと vmnetnat.conf の書き換えなどで同じことができますが、netsh によるポートフォワーディングだとホスト側のファイアウォールのルール変更が不要という利点があります。また、Windows 10でHyper-Vを使う場合でも同じ方法でVMゲストへのアクセスが可能になります。</p>
 <p>VMホストのIPアドレスが192.168.5.1、VMゲストのIPアドレスが192.168.56.5、VM上の8080でhttpdなどを動かしている場合は</p>
 <pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=80 listenaddress=192.168.5.1 connectport=8080 connectaddress=192.168.56.5
-</code></pre><p>のようにすることで、外部マシンからでも <a href="http://192.168.5.1/" target="_blank" rel="external">http://192.168.5.1/</a> でVM内の8080/tcpで動いているhttpdへアクセス可能になります。</p>
+</code></pre><p>のようにすることで、外部マシンからでも <a href="http://192.168.5.1/" target="_blank" rel="external">http://192.168.5.1/</a> でVM内の8080/tcpで動いているhttpdへアクセス可能になります。<br>ただし、ゲスト上のhttpdでREMOTE_ADDRを見ると全て192.168.56.1になってしまい、またX-Forward-Forなどは付与されないという点には注意がいります。</p>
 <p>また、</p>
 <pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=33891 listenaddress=192.168.5.1 connectport=3389 connectaddress=192.168.56.5
 </code></pre><p>のように指定しておくと、リモートデスクトップ接続でコンピュータ名に 192.168.56.1:33891 のように指定することで外部のマシンからVMゲストに対してもリモートデスクトップでの接続が可能になります。</p>
