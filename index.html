@@ -61,6 +61,46 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-08T03:22:50.000Z"><a href="/2016/05/08/win-port-forwarding/">2016-05-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/08/win-port-forwarding/">WindowsでVMへポート転送するときのメモ</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Windows 7以降であれば netsh コマンドを使ってポートフォワーディングが簡単に設定できる。これを使えば、NAT接続なVMゲストに対して外部のマシンから接続するといったことも簡単に行える。もちろん、VirtualBoxだと素直にポートフォワーディングルールの設定、VMware Playerだと vmnetnat.conf の書き換えなどで同じことができますが、netsh によるポートフォワーディングだとホスト側のファイアウォールのルール変更が不要という利点があります。また、Windows 10でHyper-Vを使う場合でも同じ方法でVMゲストへのアクセスが可能になります。</p>
+<p>VMホストのIPアドレスが192.168.5.1、VMゲストのIPアドレスが192.168.56.5、VM上の8080でhttpdなどを動かしている場合は</p>
+<pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=80 listenaddress=192.168.5.1 connectport=8080 connectaddress=192.168.56.5
+</code></pre><p>のようにすることで、外部マシンからでも <a href="http://192.168.5.1/" target="_blank" rel="external">http://192.168.5.1/</a> でVM内の8080/tcpで動いているhttpdへアクセス可能になります。</p>
+<p>また、</p>
+<pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=33891 listenaddress=192.168.5.1 connectport=3389 connectaddress=192.168.56.5
+</code></pre><p>のように指定しておくと、リモートデスクトップ接続でコンピュータ名に 192.168.56.1:33891 のように指定することで外部のマシンからVMゲストに対してもリモートデスクトップでの接続が可能になります。</p>
+<p>覚えておくと便利！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-03T13:37:49.000Z"><a href="/2016/05/03/新しいブログはじめます/">2016-05-03</a></time>
       
       
@@ -105,6 +145,17 @@
   
 
   
+<div class="widget tag">
+  <h3 class="title">タグ</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Windows/">Windows</a><small>1</small></li>
+  
+    <li><a href="/tags/memo/">memo</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 
   
 

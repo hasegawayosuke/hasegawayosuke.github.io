@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>DOM-based XSS 完全対策 | hasegawayosuke&#39;s blog</title>
+  <title>WindowsでVMへポート転送するときのメモ | hasegawayosuke&#39;s blog</title>
   <meta name="author" content="Yosuke HASEGAWA">
   
-  <meta name="description" content="せっかくブログを新しく立ち上げたので、しばらくの間はDOM-based XSSについて詳しく書いていくことにします。">
+  <meta name="description" content="Windows 7以降であれば netsh コマンドを使ってポートフォワーディングが簡単に設定できる。これを使えば、NAT接続なVMゲストに対して外部のマシンから接続するといったことも簡単に行える。もちろん、VirtualBoxだと素直にポートフォワーディングルールの設定、VMware Player">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="DOM-based XSS 完全対策"/>
+  <meta property="og:title" content="WindowsでVMへポート転送するときのメモ"/>
   <meta property="og:site_name" content="hasegawayosuke&#39;s blog"/>
 
   
@@ -62,17 +62,24 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-05-04T13:04:25.000Z"><a href="/2016/05/04/xss1/">2016-05-04</a></time>
+        <time datetime="2016-05-08T03:22:50.000Z"><a href="/2016/05/08/win-port-forwarding/">2016-05-08</a></time>
       
       
   
-    <h1 class="title">DOM-based XSS 完全対策</h1>
+    <h1 class="title">WindowsでVMへポート転送するときのメモ</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>せっかくブログを新しく立ち上げたので、しばらくの間はDOM-based XSSについて詳しく書いていくことにします。</p>
+        <p>Windows 7以降であれば netsh コマンドを使ってポートフォワーディングが簡単に設定できる。これを使えば、NAT接続なVMゲストに対して外部のマシンから接続するといったことも簡単に行える。もちろん、VirtualBoxだと素直にポートフォワーディングルールの設定、VMware Playerだと vmnetnat.conf の書き換えなどで同じことができますが、netsh によるポートフォワーディングだとホスト側のファイアウォールのルール変更が不要という利点があります。また、Windows 10でHyper-Vを使う場合でも同じ方法でVMゲストへのアクセスが可能になります。</p>
+<p>VMホストのIPアドレスが192.168.5.1、VMゲストのIPアドレスが192.168.56.5、VM上の8080でhttpdなどを動かしている場合は</p>
+<pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=80 listenaddress=192.168.5.1 connectport=8080 connectaddress=192.168.56.5
+</code></pre><p>のようにすることで、外部マシンからでも <a href="http://192.168.5.1/" target="_blank" rel="external">http://192.168.5.1/</a> でVM内の8080/tcpで動いているhttpdへアクセス可能になります。</p>
+<p>また、</p>
+<pre><code>C:\&gt;netsh interface portproxy add v4tov4 listenport=33891 listenaddress=192.168.5.1 connectport=3389 connectaddress=192.168.56.5
+</code></pre><p>のように指定しておくと、リモートデスクトップ接続でコンピュータ名に 192.168.56.1:33891 のように指定することで外部のマシンからVMゲストに対してもリモートデスクトップでの接続が可能になります。</p>
+<p>覚えておくと便利！</p>
 
       
     </div>
@@ -82,7 +89,7 @@
         
   
   <div class="tags">
-    <a href="/tags/security/">security</a>, <a href="/tags/javascript/">javascript</a>, <a href="/tags/xss/">xss</a>, <a href="/tags/dbxss/">dbxss</a>
+    <a href="/tags/Windows/">Windows</a>, <a href="/tags/memo/">memo</a>
   </div>
 
         
@@ -124,7 +131,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="https://hasegawayosuke.github.io/2016/05/04/xss1/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="https://hasegawayosuke.github.io/2016/05/08/win-port-forwarding/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
@@ -145,23 +152,9 @@
   <h3 class="title">タグ</h3>
   <ul class="entry">
   
-    <li><a href="/tags/dbxss/">dbxss</a><small>1</small></li>
+    <li><a href="/tags/Windows/">Windows</a><small>1</small></li>
   
-    <li><a href="/tags/javascript/">javascript</a><small>1</small></li>
-  
-    <li><a href="/tags/security/">security</a><small>1</small></li>
-  
-    <li><a href="/tags/xss/">xss</a><small>1</small></li>
-  
-    <li><a href="/tags/xss-javascript-dbxss-security/">xss javascript dbxss security</a><small>0</small></li>
-  
-    <li><a href="/tags/xss-javascript-dbxss-security/">xss,javascript, dbxss security</a><small>0</small></li>
-  
-    <li><a href="/tags/xss-javascript-dbxss-security/">xss,javascript,dbxss security</a><small>0</small></li>
-  
-    <li><a href="/tags/xss-javascript-dbxss-security/">xss,javascript,dbxss, security</a><small>0</small></li>
-  
-    <li><a href="/tags/xss-javascript-dbxss-security/">xss,javascript,dbxss,security</a><small>0</small></li>
+    <li><a href="/tags/memo/">memo</a><small>1</small></li>
   
   </ul>
 </div>
